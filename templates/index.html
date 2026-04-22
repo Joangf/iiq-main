@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <style>
+        table,
+        tr,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        #db-tables {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .db-table-group {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="pre-div">
+        <h1>Welcome to Ampere Computing SLT Internship Interview</h1>
+        <p>Just in case you do not aware, this project uses: Python, Flask, HTML, CSS, JS and Docker.</p>
+        <p>Break a leg.</p>
+    </div>
+    <div id="desc-div">
+        <p><strong>Project description:</strong></p>
+        <p>A Distributor has a small system, it buys products from suppliers and delivers to small stalls.
+            Currently it needs to build a simple web to manage data for its system.</p>
+        <p>For the detail, system has many facilities, each facility imports products from many suppliers. Each supplier
+            provides several
+            categories of product. Everyday, each facility has new events for the stock in and stock out then records them to the warehouse and consumption table.</p>
+        <p><strong>Database is described as below:</strong></p>
+        <div id="db-tables">
+            <div class="db-table-group">
+                <h4>facility</h4>
+                <table>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>location</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>HN</td>
+                        <td>Ha Noi</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>DN</td>
+                        <td>Da Nang</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>HCM</td>
+                        <td>Ho Chi Minh</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="db-table-group">
+                <h4>supplier</h4>
+                <table>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>location</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>North</td>
+                        <td>Ha Noi</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Central</td>
+                        <td>Da Nang</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>South</td>
+                        <td>Ho Chi Minh</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="db-table-group">
+                <h4>product</h4>
+                <table>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>category_name</th>
+                        <th>supplier_id</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>APW</td>
+                        <td>Watch</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>APW Pro</td>
+                        <td>Watch</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>AA</td>
+                        <td>CPU</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>AAM</td>
+                        <td>CPU</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>VNM</td>
+                        <td>Milk</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>TH</td>
+                        <td>Milk</td>
+                        <td>3</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="db-table-group">
+                <h4>warehouse</h4>
+                <table>
+                    <tr>
+                        <th>id</th>
+                        <th>facility_id</th>
+                        <th>product_id</th>
+                        <th>quantity</th>
+                        <th>import_date</th>
+                        <th>exp_date</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>5</td>
+                        <td>100</td>
+                        <td>2026-03-01</td>
+                        <td>2026-06-01</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>6</td>
+                        <td>200</td>
+                        <td>2026-03-01</td>
+                        <td>2026-06-01</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>200</td>
+                        <td>2026-03-01</td>
+                        <td>2026-06-01</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>6</td>
+                        <td>100</td>
+                        <td>2026-03-01</td>
+                        <td>2026-06-01</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>5</td>
+                        <td>500</td>
+                        <td>2025-09-01</td>
+                        <td>2026-01-01</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>2</td>
+                        <td>5</td>
+                        <td>100</td>
+                        <td>2026-02-01</td>
+                        <td>2026-05-01</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="db-table-group">
+                <h4>consumption</h4>
+                <table>
+                    <tr>
+                        <th>id</th>
+                        <th>facility_id</th>
+                        <th>product_id</th>
+                        <th>quantity</th>
+                        <th>order_date</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>5</td>
+                        <td>50</td>
+                        <td>2026-03-01</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>6</td>
+                        <td>50</td>
+                        <td>2026-03-01</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>50</td>
+                        <td>2026-04-01</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>3</td>
+                        <td>6</td>
+                        <td>50</td>
+                        <td>2026-04-01</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>2</td>
+                        <td>5</td>
+                        <td>200</td>
+                        <td>2025-11-01</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>2</td>
+                        <td>5</td>
+                        <td>300</td>
+                        <td>2026-04-01</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>2</td>
+                        <td>5</td>
+                        <td>50</td>
+                        <td>2025-12-01</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div id="question-div">
+        <p><strong>Quest:</strong></p>
+        <p>Currently, we have a web using Flask as backend. Frontend uses basic jinja, html, css and js. Database uses sql and sqlite engine. The system is finally built in iiq:1.0.0 docker image.</p>
+        <p>Database was inserted facilities information. Check localhost:5000/q0 for facility data.</p>
+        <p><strong>According to what has already been, as an engineer of this project, you need to finish below tasks. A mandatory thing you must do is optimizing the python code in be.py and html/jinja code in all html files. Then apply them in the rest of your tasks.</strong></p>
+        <p><strong>Q1.</strong> Insert the missing data listed above to the database, then show all data on the localhost:5000/q1 endpoint.</p>
+        <p><strong>Q2.</strong> Create a form to submit new facility with the facility name is SLT and the location is Ho Chi Minh, using localhost:5000/q2 endpoint.</p>
+        <p><strong>Q3.</strong> 
+            On the first date of April, 2026. The distributor manager received an emergence call from the facilities that they did not have enough products to deliver to users. <br />
+            As an engineer of the system, you need to write an sql query string to retrieve: <br />
+            <strong>Which facilities need to import more products? The remain and overdue number of them. The expected result is shown in localhost:5000/q3. Show your table result below the expected one.</strong>  <br />
+            It is known that, the facility need to import a product if the amount of it is less than 100 and the product existed in the warehouse of the facility before. <br />
+            Hint: q3_hint.png <br />
+            Don't worry if you can not spend more time to finish this quest. We will focus on your idea and strategy in resolving a problem.
+        </p>
+        <p><strong>Q4.</strong> Optional! Write a function to save all data on the database to json file(s) in only 1 directory. Then create a volume for that directory and mount to the directory /q4 in the machine host.</p>
+    </div>
+</body>
+
+</html>

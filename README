@@ -1,0 +1,24 @@
+# Welcome to Ampere Computing SLT Internship Interview
+Thank you for applying Technical Intern - SLT Fullstack Engineer position at Ampere Computing. We appreciate your attendance.
+Here is a small project with some tasks for you to continue the interview process.
+
+#### Please ensure there is docker running on your host machine.
+
+### 1. Try to start this project by running below commands in your shell:
+```
+chmod 777 start.sh
+
+./start.sh
+```
+
+### 2. Then access localhost:5000 in your browser and resolve the tasks.
+
+### 3. If you catch issue with docker container, try to reset by running below commands:
+```
+chmod 777 reset.sh
+
+./reset.sh
+```
+We are looking forward to your assignment.
+
+Sincerely,

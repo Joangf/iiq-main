@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q3</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <style>
+        table,
+        tr,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h4>Q3</h4>
+    <p>Expected result: For reference date 2026-04-01</p>
+    <div>
+        <table>
+            <tr>
+                <th>Facility</th>
+                <th>Product</th>
+                <th>Supplier</th>
+                <th>Remain Quantity</th>
+                <th>Overdue Quantity</th>
+                <th>Need Import</th>
+            </tr>
+            <tr>
+                <td>HN</td>
+                <td>VNM</td>
+                <td>South</td>
+                <td>50</td>
+                <td>0</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>HN</td>
+                <td>TH</td>
+                <td>South</td>
+                <td>150</td>
+                <td>0</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>HCM</td>
+                <td>VNM</td>
+                <td>South</td>
+                <td>150</td>
+                <td>0</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>HCM</td>
+                <td>TH</td>
+                <td>South</td>
+                <td>50</td>
+                <td>0</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>DN</td>
+                <td>VNM</td>
+                <td>South</td>
+                <td>-200</td>
+                <td>250</td>
+                <td>Yes</td>
+            </tr>
+        </table>
+    </div>
+    <hr />
+    
+    <p>Show result</p>
+</body>
+
+</html>
