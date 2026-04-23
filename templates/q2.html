@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Q2{% endblock %}
+
+{% block content %}
+
+<h4>Q2</h4>
+<p>Submit a new facility</p>
+
+<form method="post" action="/q2">
+    <div>
+        <label for="name">Facility name</label>
+        <input id="name" name="name" type="text" value="SLT" readonly />
+    </div>
+    <div>
+        <label for="location">Location</label>
+        <input id="location" name="location" type="text" value="Ho Chi Minh" readonly />
+    </div>
+    <button type="submit">Submit facility</button>
+</form>
+
+<hr />
+
+<p>Current facilities</p>
+<div>
+    <table>
+        <tr>
+            {% for key in keys %}
+            <th>{{ key }}</th>
+            {% endfor %}
+        </tr>
+        {% for item in data %}
+        <tr>
+            {% for key in keys %}
+            <td>{{ item[key] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

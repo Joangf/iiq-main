@@ -1,0 +1,22 @@
+services:
+  be:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./q4:/iiq/q4
+    environment:
+      - DB_URL=postgresql://postgres:password@db:5432/iiq
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-password}
+      POSTGRES_DB: iiq
+      PGPORT: 5432
+    volumes:
+      - ./:/docker-entrypoint-initdb.d
+      - iiq-db-data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"
+volumes:
+  iiq-db-data:

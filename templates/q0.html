@@ -1,42 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Q0</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
-    <style>
-        table,
-        tr,
-        th,
-        td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 5px;
-        }
-    </style>
-</head>
+{% block title %}Q0{% endblock %}
 
-<body>
-    <h4>Q0</h4>
-    <p>Show facilities</p>
-    <div>
-        <table>
-            <tr>
-                {% for key in keys %}
-                <th>{{key}}</th>
-                {% endfor %}
-            </tr>
-            {% for item in data %}
-            <tr>
-                {% for key in keys %}
-                <td>{{item[key]}}</td>
-                {% endfor %}
-            </tr>
+{% block content %}
+
+<h4>Q0</h4>
+<p>Show facilities</p>
+<div>
+    <table>
+        <tr>
+            {% for key in keys %}
+            <th>{{key}}</th>
             {% endfor %}
-        </table>
-    </div>
-</body>
-
-</html>
+        </tr>
+        {% for item in data %}
+        <tr>
+            {% for key in keys %}
+            <td>{{item[key]}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+    <style>
+        table,
+        tr,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        #db-tables {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        .db-table-group {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+  {% block content %}{% endblock %}
+</body>
+
+</html>

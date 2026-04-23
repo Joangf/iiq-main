@@ -1,38 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
-    <style>
-        table,
-        tr,
-        th,
-        td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            padding: 5px;
-        }
+{% block title %}Q0{% endblock %}
 
-        #db-tables {
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: flex-start;
-        }
+{% block content %}
 
-        .db-table-group {
-            display: flex;
-            flex-direction: column;
-            margin: 20px;
-        }
-    </style>
-</head>
-
-<body>
     <div id="pre-div">
         <h1>Welcome to Ampere Computing SLT Internship Interview</h1>
         <p>Just in case you do not aware, this project uses: Python, Flask, HTML, CSS, JS and Docker.</p>
@@ -286,6 +257,4 @@
         </p>
         <p><strong>Q4.</strong> Optional! Write a function to save all data on the database to json file(s) in only 1 directory. Then create a volume for that directory and mount to the directory /q4 in the machine host.</p>
     </div>
-</body>
-
-</html>
+{% endblock %}

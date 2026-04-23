@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Q1{% endblock %}
+
+{% block content %}
+
+<h4>Q1</h4>
+<p>Show all tables</p>
+
+{% for table in tables %}
+<div>
+    <h5>{{ table['name'] }}</h5>
+    <table>
+        <tr>
+            {% for key in table['keys'] %}
+            <th>{{ key }}</th>
+            {% endfor %}
+        </tr>
+        {% for item in table['data'] %}
+        <tr>
+            {% for key in table['keys'] %}
+            <td>{{ item[key] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endfor %}
+{% endblock %}
