@@ -24,7 +24,7 @@ This project is a small Flask + PostgreSQL application for the Ampere Computing 
 1. Start the application with Docker Compose:
 
 	```bash
-	docker compose up --build
+	docker compose up -d --build
 	```
 
 2. Open the application in the browser:
