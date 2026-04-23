@@ -74,68 +74,74 @@ INSERT INTO consumption (facility_id, product_id, quantity, order_date) VALUES
     ( 2, 5, 50, '2025-12-01');
 
 
-CREATE OR REPLACE FUNCTION get_inventory_status(p_ref_date DATE)
+CREATE OR REPLACE FUNCTION get_inventory_status(ref_date DATE DEFAULT '2026-04-01')
 RETURNS TABLE (
     "Facility" VARCHAR,
     "Product" VARCHAR,
     "Supplier" VARCHAR,
     "Remain Quantity" BIGINT,
     "Overdue Quantity" BIGINT,
-    "Need Import" VARCHAR
-) 
-LANGUAGE plpgsql
-AS $$
+    "Need Import" TEXT
+) AS $$
 BEGIN
     RETURN QUERY
-    WITH wh AS (
-        SELECT
-            w.id,
-            f.name AS facility,
-            p.name AS product,
-            s.name AS supplier,
-            w.quantity AS import_quantity,
-            w.import_date,
-            w.exp_date,
-            COALESCE((
-                SELECT SUM(c.quantity)
-                FROM consumption c
-                WHERE c.facility_id = w.facility_id
-                  AND c.product_id = w.product_id
-                  AND c.order_date >= w.import_date
-                  AND c.order_date <= p_ref_date
-            ), 0) AS consumed_to_ref
-        FROM warehouse w
-        JOIN facility f ON f.id = w.facility_id
-        JOIN product p ON p.id = w.product_id
-        JOIN supplier s ON s.id = p.supplier_id
+    -- Bước 1: Map mỗi lần tiêu thụ vào lô hàng warehouse tương ứng (Lô hàng nhập gần nhất trước khi xuất)
+    WITH ConsumptionMapped AS (
+        SELECT 
+            c.quantity AS order_quantity,
+            (
+                SELECT w.id 
+                FROM warehouse w
+                WHERE w.facility_id = c.facility_id 
+                  AND w.product_id = c.product_id
+                  AND w.import_date <= c.order_date
+                ORDER BY w.import_date DESC 
+                LIMIT 1
+            ) AS warehouse_id
+        FROM consumption c
     ),
-    lot_status AS (
-        SELECT
-            facility,
-            product,
-            supplier,
-            CASE
-                WHEN exp_date >= p_ref_date THEN import_quantity - consumed_to_ref
-                ELSE 0
-            END AS remain_qty,
-            CASE
-                WHEN exp_date < p_ref_date THEN import_quantity - consumed_to_ref
-                ELSE 0
-            END AS overdue_qty
-        FROM wh
+    -- Bước 2: Tính tổng lượng đã xuất (order) cho từng lô hàng warehouse
+    OrderSums AS (
+        SELECT 
+            warehouse_id, 
+            SUM(order_quantity) AS sum_order_quantity
+        FROM ConsumptionMapped
+        WHERE warehouse_id IS NOT NULL
+        GROUP BY warehouse_id
+    ),
+    -- Bước 3: Tính toán Remain và Overdue cho từng lô hàng so với ref_date
+    Temp1 AS (
+        SELECT 
+            w.facility_id,
+            w.product_id,
+            -- Nếu lô hàng đã hết hạn trước ngày mốc, toàn bộ số lượng còn lại thành overdue, remain = 0
+            CASE 
+                WHEN w.exp_date < ref_date THEN 0
+                ELSE w.quantity - COALESCE(os.sum_order_quantity, 0) 
+            END AS remain_quantity,
+            CASE 
+                WHEN w.exp_date < ref_date THEN w.quantity - COALESCE(os.sum_order_quantity, 0) 
+                ELSE 0 
+            END AS overdue_quantity
+        FROM warehouse w
+        LEFT JOIN OrderSums os ON w.id = os.warehouse_id
     )
-    SELECT
-        ls.facility::VARCHAR,
-        ls.product::VARCHAR,
-        ls.supplier::VARCHAR,
-        SUM(ls.remain_qty)::BIGINT AS "Remain Quantity",
-        SUM(ls.overdue_qty)::BIGINT AS "Overdue Quantity",
-        CASE
-            WHEN SUM(ls.remain_qty) < 100 THEN 'Yes'::VARCHAR
-            ELSE 'No'::VARCHAR
+    -- Bước 4: Tổng hợp lại kết quả cuối cùng theo Facility và Product
+    SELECT 
+        f.name AS "Facility",
+        p.name AS "Product",
+        s.name AS "Supplier",
+        SUM(t.remain_quantity)::BIGINT AS "Remain Quantity",
+        SUM(t.overdue_quantity)::BIGINT AS "Overdue Quantity",
+        CASE 
+            WHEN SUM(t.remain_quantity) < 100 THEN 'Yes'
+            ELSE 'No'
         END AS "Need Import"
-    FROM lot_status ls
-    GROUP BY ls.facility, ls.product, ls.supplier
-    ORDER BY ls.facility DESC, ls.product DESC;
+    FROM Temp1 t
+    JOIN facility f ON t.facility_id = f.id
+    JOIN product p ON t.product_id = p.id
+    JOIN supplier s ON p.supplier_id = s.id
+    GROUP BY f.name, p.name, s.name
+    ORDER BY "Facility" DESC, "Product" DESC;
 END;
-$$;
+$$ LANGUAGE plpgsql;
